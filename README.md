@@ -7,16 +7,21 @@ Project ini adalah sistem presensi berbasis web untuk Dosen dan Mahasiswa yang d
 
 ### 1. Admin
 Admin memiliki akses penuh untuk mengelola sistem:
-- ✅ Melihat data absensi dari mahasiswa dan dosen
-- ✅ Menambah atau menghapus jadwal absensi bagi mahasiswa dan dosen
+- ✅ Melihat laporan absensi dari mahasiswa dan dosen
+- ✅ Menambah atau menghapus jadwal absensi bagi mahasiswa
 - ✅ Menambah atau menghapus forum untuk dosen dan mahasiswa
+- ✅ Mengelola hari libur (dosen tidak wajib absen di hari libur)
+- ✅ Melihat rekap kehadiran dosen harian
 
 ### 2. Dosen
 Dosen dapat mengelola kelas dan mahasiswa:
+- ✅ **Melakukan absensi harian (MANDATORY)** - wajib absen setiap hari kerja (Senin-Jumat)
+- ✅ **Tidak perlu absen di weekend (Sabtu & Minggu) dan hari libur nasional**
 - ✅ Menambahkan atau menghapus jadwal absensi untuk mahasiswa
 - ✅ Mengubah status mahasiswa (Hadir, Absen, Izin/Sakit)
 - ✅ Melihat data mahasiswa yang sudah absen
 - ✅ Menambah atau menghapus forum pembelajaran untuk mahasiswa
+- ✅ Melihat histori absensi diri sendiri
 
 ### 3. Mahasiswa
 Mahasiswa dapat melakukan absensi dan melihat riwayat:
@@ -90,6 +95,30 @@ Relasi many-to-many antara forum dan mahasiswa
 - tanggal_join (TIMESTAMP)
 ```
 
+### Tabel: absensi_dosen
+Menyimpan data absensi harian dosen (MANDATORY)
+```sql
+- id (INT, PRIMARY KEY, AUTO_INCREMENT)
+- dosen_id (INT, FOREIGN KEY ke users)
+- tanggal (DATE)
+- waktu_absen (DATETIME)
+- status (ENUM: 'hadir', 'izin', 'sakit', 'alpha')
+- keterangan (TEXT)
+- created_at (TIMESTAMP)
+- UNIQUE: dosen_id + tanggal (1 dosen hanya bisa absen 1x per hari)
+```
+
+### Tabel: hari_libur
+Menyimpan data hari libur nasional (dosen tidak wajib absen)
+```sql
+- id (INT, PRIMARY KEY, AUTO_INCREMENT)
+- tanggal (DATE, UNIQUE)
+- keterangan (VARCHAR) - nama libur
+- created_by (INT, FOREIGN KEY ke users)
+- created_at (TIMESTAMP)
+```
+**Catatan:** Weekend (Sabtu & Minggu) otomatis dianggap hari libur, tidak perlu diinput ke tabel ini.
+
 ## 📂 Struktur File Project
 
 ```
@@ -104,14 +133,18 @@ SistemPresensi/
 │
 ├── admin/
 │   ├── dashboard.php         # Dashboard admin
-│   ├── data_absensi.php      # Melihat semua data absensi
-│   ├── kelola_jadwal.php     # Mengelola jadwal absensi
+│   ├── laporan_mahasiswa.php # Laporan absensi mahasiswa
+│   ├── laporan_dosen.php     # Laporan absensi dosen
+│   ├── kelola_jadwal.php     # Mengelola jadwal absensi mahasiswa
 │   ├── kelola_forum.php      # Mengelola forum
+│   ├── kelola_libur.php      # Mengelola hari libur
 │   └── kelola_user.php       # Mengelola user (opsional)
 │
 ├── dosen/
 │   ├── dashboard.php         # Dashboard dosen
-│   ├── kelola_jadwal.php     # Mengelola jadwal absensi
+│   ├── absensi_harian.php    # Absensi harian dosen (MANDATORY)
+│   ├── histori_absensi.php   # Histori absensi dosen
+│   ├── kelola_jadwal.php     # Mengelola jadwal absensi mahasiswa
 │   ├── kelola_mahasiswa.php  # Melihat & ubah status mahasiswa
 │   ├── kelola_forum.php      # Mengelola forum pembelajaran
 │   └── laporan_absensi.php   # Laporan absensi mahasiswa
@@ -210,7 +243,8 @@ http://localhost/SistemPresensi
 - [ ] Tambahkan CSS custom di assets/css/style.css
 
 ### 🔄 Tahap 4: Fitur Admin (Prioritas 3)
-- [ ] Halaman melihat data absensi (admin/data_absensi.php)
+- [ ] Halaman laporan absensi mahasiswa (admin/laporan_mahasiswa.php)
+- [ ] Halaman laporan absensi dosen (admin/laporan_dosen.php)
 - [ ] Halaman kelola jadwal (admin/kelola_jadwal.php)
   - Tambah jadwal
   - Hapus jadwal
@@ -219,13 +253,23 @@ http://localhost/SistemPresensi
   - Tambah forum
   - Hapus forum
   - Edit forum
+- [ ] Halaman kelola hari libur (admin/kelola_libur.php)
+  - Tambah hari libur
+  - Hapus hari libur
 
 ### 🔄 Tahap 5: Fitur Dosen (Prioritas 4)
+- [ ] **Halaman absensi harian dosen (dosen/absensi_harian.php) - PRIORITAS UTAMA**
+  - Form absensi harian
+  - Validasi: hanya bisa absen 1x per hari
+  - Validasi: tidak bisa absen di weekend (Sabtu & Minggu)
+  - Validasi: tidak bisa absen di hari libur nasional
+  - Notifikasi jika belum absen hari ini (hanya di hari kerja)
+- [ ] Halaman histori absensi dosen (dosen/histori_absensi.php)
 - [ ] Halaman kelola jadwal absensi (dosen/kelola_jadwal.php)
 - [ ] Halaman kelola mahasiswa (dosen/kelola_mahasiswa.php)
   - Lihat daftar mahasiswa
   - Ubah status absensi (Hadir, Absen, Izin, Sakit)
-- [ ] Halaman laporan absensi (dosen/laporan_absensi.php)
+- [ ] Halaman laporan absensi mahasiswa (dosen/laporan_absensi.php)
 - [ ] Halaman kelola forum (dosen/kelola_forum.php)
 
 ### 🔄 Tahap 6: Fitur Mahasiswa (Prioritas 5)
@@ -245,6 +289,35 @@ http://localhost/SistemPresensi
 - [ ] Tambahkan alert/notifikasi untuk setiap aksi
 
 ## 💡 Tips Pengerjaan
+### ⚠️ PENTING - Fitur Absensi Dosen:
+1. **Dosen WAJIB absen setiap hari kerja (Senin-Jumat)** tanpa perlu join forum
+2. **Dosen TIDAK PERLU absen di:**
+   - Weekend: Sabtu & Minggu (otomatis terdeteksi)
+   - Hari libur nasional (dari tabel `hari_libur`)
+3. **Validasi penting untuk absensi dosen:**
+   - Cek apakah hari ini weekend (Sabtu/Minggu)
+   - Cek apakah hari ini adalah hari libur nasional (query ke tabel `hari_libur`)
+   - Cek apakah dosen sudah absen hari ini (UNIQUE constraint: dosen_id + tanggal)
+   - Tampilkan notifikasi di dashboard jika dosen belum absen hari ini
+4. **Contoh implementasi (sudah ada di functions.php):**
+   ```php
+   // Cek weekend
+   $day_of_week = date('N', strtotime($tanggal)); // 1=Senin, 7=Minggu
+   if ($day_of_week == 6 || $day_of_week == 7) {
+       // Sabtu atau Minggu = libur
+   }
+   
+   // Cek hari libur nasional
+   $query = "SELECT * FROM hari_libur WHERE tanggal = '$today'";
+   
+   // Cek sudah absen
+   $query = "SELECT * FROM absensi_dosen 
+             WHERE dosen_id = $dosen_id AND tanggal = '$today'";
+   ```
+5. **Gunakan fungsi helper yang sudah tersedia:**
+   - `cekHariLibur($conn, $tanggal)` - otomatis cek weekend & hari libur
+   - `getStatusAbsensiDosenHariIni($conn, $dosen_id)` - get status lengkapJika ada result = sudah absen, disable tombol absen
+   ```
 
 ### Untuk yang Mengerjakan Backend:
 1. **Mulai dari struktur database** - pastikan relasi antar tabel sudah benar
@@ -252,6 +325,10 @@ http://localhost/SistemPresensi
 3. **Buat fungsi helper** di includes/functions.php untuk code yang sering dipakai
 4. **Validasi input** dari user sebelum masuk ke database
 5. **Gunakan session** untuk menyimpan data login user
+6. **Fungsi helper yang perlu dibuat:**
+   - `cekHariLibur($tanggal)` - return true/false
+   - `cekDosenSudahAbsen($dosen_id, $tanggal)` - return true/false
+   - `hitungPersentaseKehadiran($user_id, $role)` - return persentase
 
 ### Untuk yang Mengerjakan Frontend:
 1. **Gunakan Bootstrap 5** untuk mempercepat styling
@@ -259,6 +336,10 @@ http://localhost/SistemPresensi
 3. **Gunakan class Bootstrap** seperti: container, card, table, btn, form-control
 4. **Responsive design** - pastikan tampilan bagus di mobile dan desktop
 5. **Placeholder images** - gunakan https://via.placeholder.com/ atau https://placehold.co/
+6. **Notifikasi penting di dashboard dosen:**
+   - Badge merah jika belum absen hari ini
+   - Badge hijau jika sudah absen
+   - Info jika hari libur
 
 ### Contoh Penggunaan Placeholder Image:
 ```html
@@ -332,34 +413,44 @@ http://localhost/SistemPresensi
 ## 🤝 Pembagian Tugas (Saran)
 
 ### Anggota 1: Database & Authentication
-- Setup database lengkap
+- Setup database lengkap (7 tabel)
 - Sistem login/logout
 - Sistem session
 - File config.php
+- File functions.php (helper functions)
 
 ### Anggota 2: Fitur Admin
 - Dashboard admin
+- Laporan absensi dosen & mahasiswa
 - CRUD jadwal absensi
 - CRUD forum
-- Lihat data absensi
+- **CRUD hari libur (BARU)**
 
-### Anggota 3: Fitur Dosen
+### Anggota 3: Fitur Dosen - Absensi Harian
 - Dashboard dosen
-- Kelola jadwal
-- Kelola status mahasiswa
-- Kelola forum dosen
+- **Sistem absensi harian dosen (PRIORITAS TINGGI)**
+- **Histori absensi dosen**
+- **Validasi hari libur**
+- Notifikasi belum absen
 
-### Anggota 4: Fitur Mahasiswa
+### Anggota 4: Fitur Dosen - Kelola Mahasiswa
+- Kelola jadwal absensi mahasiswa
+- Kelola status absensi mahasiswa
+- Kelola forum pembelajaran
+- Laporan absensi mahasiswa
+
+### Anggota 5: Fitur Mahasiswa
 - Dashboard mahasiswa
-- Sistem absensi
+- Sistem absensi mahasiswa
 - Histori absensi
 - Join forum
 
-### Anggota 5: Frontend & Styling
+### Anggota 6 (atau dibagi): Frontend & Styling
 - Template header/footer/navbar
 - Styling dengan Bootstrap
 - Responsive design
 - Custom CSS
+- Badge notifikasi
 
 ## 📞 Troubleshooting
 
@@ -389,31 +480,48 @@ http://localhost/SistemPresensi
 ## ✅ Checklist Sebelum Submit
 
 - [ ] Semua fitur sudah berfungsi dengan baik
-- [ ] Database sudah lengkap dan terstruktur
+- [ ] Database sudah lengkap dan terstruktur (7 tabel)
 - [ ] Login/logout berfungsi untuk semua role
+- [ ] **Absensi harian dosen sudah berfungsi (MANDATORY)**
+- [ ] **Validasi hari libur sudah berfungsi**
+- [ ] Admin bisa melihat laporan absensi dosen & mahasiswa
 - [ ] Tampilan responsive dan rapi
 - [ ] Tidak ada error PHP
 - [ ] Dokumentasi code sudah lengkap (comment di code)
-- [ ] File database.sql sudah final dan bisa di-import
-- [ ] README.md sudah update jika ada perubahan
+7. **⚠️ KHUSUS ABSENSI DOSEN:**
+   - Pastikan validasi weekend (Sabtu & Minggu) berfungsi
+   - Pastikan validasi hari libur nasional berfungsi
+   - Pastikan dosen tidak bisa absen 2x dalam sehari
+   - Tampilkan notifikasi jika dosen belum absen (hanya di hari kerja)
+   - Test dengan berbagai skenario:
+## 🎯 Target Fitur Minimal (untuk lulus)
 
-## 📝 Catatan Penting
-
-1. **Jangan hardcode data** - gunakan database untuk semua data dinamis
-2. **Konsisten dalam penamaan** - gunakan snake_case atau camelCase, pilih satu
-3. **Comment code** - beri komentar di bagian yang kompleks
-4. **Git/Version Control** - jika pakai git, commit secara berkala
-5. **Backup database** - export database.sql setiap ada perubahan struktur
-6. **Test berkala** - jangan tunggu sampai selesai semua baru di-test
+Jika waktu terbatas, fokus pada fitur-fitur ini:
+1. ✅ Login/Logout untuk 3 role
+2. ✅ Dashboard untuk masing-masing role
+3. ✅ **Dosen bisa absen harian (MANDATORY - FITUR UTAMA)**
+   - Hari kerja: Senin - Jumat
+   - Libur: Sabtu, Minggu, & hari libur nasional
+4. ✅ **Admin bisa kelola hari libur nasional**
+5. ✅ **Admin bisa lihat laporan absensi dosen & mahasiswa**
+6. ✅ Dosen bisa tambah jadwal dan kelola absensi mahasiswa
+7. ✅ Mahasiswa bisa absen dan lihat historiselesai semua baru di-test
+7. **⚠️ KHUSUS ABSENSI DOSEN:**
+   - Pastikan validasi hari libur berfungsi
+   - Pastikan dosen tidak bisa absen 2x dalam sehari
+   - Tampilkan notifikasi jika dosen belum absen
+   - Test dengan berbagai skenario (hari kerja, hari libur, sudah absen, belum absen)
 
 ## 🎯 Target Fitur Minimal (untuk lulus)
 
 Jika waktu terbatas, fokus pada fitur-fitur ini:
 1. ✅ Login/Logout untuk 3 role
 2. ✅ Dashboard untuk masing-masing role
-3. ✅ Admin bisa tambah/hapus jadwal
-4. ✅ Dosen bisa tambah jadwal dan lihat absensi
-5. ✅ Mahasiswa bisa absen dan lihat histori
+3. ✅ **Dosen bisa absen harian (MANDATORY - FITUR UTAMA)**
+4. ✅ **Admin bisa kelola hari libur**
+5. ✅ **Admin bisa lihat laporan absensi dosen & mahasiswa**
+6. ✅ Dosen bisa tambah jadwal dan kelola absensi mahasiswa
+7. ✅ Mahasiswa bisa absen dan lihat histori
 
 Fitur tambahan (bonus):
 - Edit data
@@ -421,6 +529,7 @@ Fitur tambahan (bonus):
 - Export laporan (PDF/Excel)
 - Email notification
 - Grafik statistik absensi
+- Reminder otomatis untuk dosen yang belum absen
 
 ---
 

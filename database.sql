@@ -1,14 +1,6 @@
--- ============================================
--- DATABASE SISTEM PRESENSI DOSEN & MAHASISWA
--- Project UAS - Simple Version
--- ============================================
-
 CREATE DATABASE IF NOT EXISTS db_presensi_uas;
 USE db_presensi_uas;
 
--- ============================================
--- TABEL 1: USERS (Admin, Dosen, Mahasiswa)
--- ============================================
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -20,9 +12,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ============================================
--- TABEL 2: FORUMS (Kelas/Forum Pembelajaran)
--- ============================================
 CREATE TABLE forums (
     id INT AUTO_INCREMENT PRIMARY KEY,
     kode_forum VARCHAR(20) NOT NULL UNIQUE,
@@ -34,10 +23,6 @@ CREATE TABLE forums (
     FOREIGN KEY (dosen_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- ============================================
--- TABEL 3: FORUM_MAHASISWA (Relasi Forum & Mahasiswa)
--- ============================================
 CREATE TABLE forum_mahasiswa (
     id INT AUTO_INCREMENT PRIMARY KEY,
     forum_id INT NOT NULL,
@@ -46,10 +31,6 @@ CREATE TABLE forum_mahasiswa (
     FOREIGN KEY (forum_id) REFERENCES forums(id) ON DELETE CASCADE,
     FOREIGN KEY (mahasiswa_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- ============================================
--- TABEL 4: JADWAL ABSENSI
--- ============================================
 CREATE TABLE jadwal_absensi (
     id INT AUTO_INCREMENT PRIMARY KEY,
     forum_id INT NOT NULL,
@@ -63,10 +44,6 @@ CREATE TABLE jadwal_absensi (
     FOREIGN KEY (forum_id) REFERENCES forums(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- ============================================
--- TABEL 5: ATTENDANCE (Data Absensi Mahasiswa)
--- ============================================
 CREATE TABLE attendance (
     id INT AUTO_INCREMENT PRIMARY KEY,
     jadwal_id INT NOT NULL,
@@ -77,6 +54,27 @@ CREATE TABLE attendance (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (jadwal_id) REFERENCES jadwal_absensi(id) ON DELETE CASCADE,
     FOREIGN KEY (mahasiswa_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE absensi_dosen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dosen_id INT NOT NULL,
+    tanggal DATE NOT NULL,
+    waktu_absen DATETIME,
+    status ENUM('hadir', 'izin', 'sakit', 'alpha') DEFAULT 'alpha',
+    keterangan TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dosen_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_dosen_tanggal (dosen_id, tanggal)
+);
+
+CREATE TABLE hari_libur (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tanggal DATE NOT NULL UNIQUE,
+    keterangan VARCHAR(200) NOT NULL,
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- ============================================
@@ -117,6 +115,19 @@ INSERT INTO jadwal_absensi (forum_id, tanggal, waktu_mulai, waktu_selesai, topik
 INSERT INTO attendance (jadwal_id, mahasiswa_id, status, waktu_absen) VALUES
 (1, 4, 'hadir', '2024-12-09 08:05:00');
 
+-- Sample Hari Libur
+INSERT INTO hari_libur (tanggal, keterangan, created_by) VALUES
+('2024-12-25', 'Hari Natal', 1),
+('2025-01-01', 'Tahun Baru', 1),
+('2025-03-31', 'Hari Raya Idul Fitri', 1),
+('2025-04-01', 'Cuti Bersama Idul Fitri', 1);
+
+-- Sample Absensi Dosen (beberapa hari)
+INSERT INTO absensi_dosen (dosen_id, tanggal, waktu_absen, status) VALUES
+(2, '2024-12-09', '2024-12-09 07:30:00', 'hadir'),
+(3, '2024-12-09', '2024-12-09 07:45:00', 'hadir'),
+(2, '2024-12-10', '2024-12-10 07:35:00', 'hadir');
+
 -- ============================================
 -- SELESAI - Database Simple untuk UAS
 -- ============================================
@@ -126,5 +137,7 @@ INSERT INTO attendance (jadwal_id, mahasiswa_id, status, waktu_absen) VALUES
 -- 2. Login Admin: username = admin
 -- 3. Login Dosen: username = dosen1 atau dosen2
 -- 4. Login Mahasiswa: username = mhs001, mhs002, atau mhs003
--- 5. Total 5 tabel: users, forums, forum_mahasiswa, jadwal_absensi, attendance
+-- 5. Total 7 tabel: users, forums, forum_mahasiswa, jadwal_absensi, attendance, absensi_dosen, hari_libur
+-- 6. Dosen wajib absen setiap hari (kecuali hari libur) tanpa perlu join forum
+-- 7. Admin dapat melihat laporan absensi dosen dan mahasiswa
 
