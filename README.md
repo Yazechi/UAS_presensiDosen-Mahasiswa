@@ -445,14 +445,7 @@ http://localhost/SistemPresensi
 - Histori absensi
 - Join forum
 
-### Anggota 6 (atau dibagi): Frontend & Styling
-- Template header/footer/navbar
-- Styling dengan Bootstrap
-- Responsive design
-- Custom CSS
-- Badge notifikasi
-
-## 📞 Troubleshooting
+## Troubleshooting
 
 ### Error: Connection Failed
 - Cek apakah MySQL di XAMPP sudah running
@@ -470,81 +463,10 @@ http://localhost/SistemPresensi
 - Cek koneksi internet (jika menggunakan CDN)
 - Atau download Bootstrap dan simpan di folder assets
 
-## 📚 Resources & Referensi
+## Resources & Referensi
 
 - **Bootstrap 5 Documentation**: https://getbootstrap.com/docs/5.3/
 - **PHP Manual**: https://www.php.net/manual/en/
 - **MySQL Documentation**: https://dev.mysql.com/doc/
 - **W3Schools PHP**: https://www.w3schools.com/php/
 
-## ✅ Checklist Sebelum Submit
-
-- [ ] Semua fitur sudah berfungsi dengan baik
-- [ ] Database sudah lengkap dan terstruktur (7 tabel)
-- [ ] Login/logout berfungsi untuk semua role
-- [ ] **Absensi harian dosen sudah berfungsi (MANDATORY)**
-- [ ] **Validasi hari libur sudah berfungsi**
-- [ ] Admin bisa melihat laporan absensi dosen & mahasiswa
-- [ ] Tampilan responsive dan rapi
-- [ ] Tidak ada error PHP
-- [ ] Dokumentasi code sudah lengkap (comment di code)
-7. **⚠️ KHUSUS ABSENSI DOSEN:**
-   - Pastikan validasi weekend (Sabtu & Minggu) berfungsi
-   - Pastikan validasi hari libur nasional berfungsi
-   - Pastikan dosen tidak bisa absen 2x dalam sehari
-   - Tampilkan notifikasi jika dosen belum absen (hanya di hari kerja)
-   - Test dengan berbagai skenario:
-## 🎯 Target Fitur Minimal (untuk lulus)
-
-Jika waktu terbatas, fokus pada fitur-fitur ini:
-1. ✅ Login/Logout untuk 3 role
-2. ✅ Dashboard untuk masing-masing role
-3. ✅ **Dosen bisa absen harian (MANDATORY - FITUR UTAMA)**
-   - Hari kerja: Senin - Jumat
-   - Libur: Sabtu, Minggu, & hari libur nasional
-4. ✅ **Admin bisa kelola hari libur nasional**
-5. ✅ **Admin bisa lihat laporan absensi dosen & mahasiswa**
-6. ✅ Dosen bisa tambah jadwal dan kelola absensi mahasiswa
-7. ✅ Mahasiswa bisa absen dan lihat historiselesai semua baru di-test
-7. **⚠️ KHUSUS ABSENSI DOSEN:**
-   - Pastikan validasi hari libur berfungsi
-   - Pastikan dosen tidak bisa absen 2x dalam sehari
-   - Tampilkan notifikasi jika dosen belum absen
-   - Test dengan berbagai skenario (hari kerja, hari libur, sudah absen, belum absen)
-
-## 🎯 Target Fitur Minimal (untuk lulus)
-
-Jika waktu terbatas, fokus pada fitur-fitur ini:
-1. ✅ Login/Logout untuk 3 role
-2. ✅ Dashboard untuk masing-masing role
-3. ✅ **Dosen bisa absen harian (MANDATORY - FITUR UTAMA)**
-4. ✅ **Admin bisa kelola hari libur**
-5. ✅ **Admin bisa lihat laporan absensi dosen & mahasiswa**
-6. ✅ Dosen bisa tambah jadwal dan kelola absensi mahasiswa
-7. ✅ Mahasiswa bisa absen dan lihat histori
-
-Fitur tambahan (bonus):
-- Edit data
-- Filter/search data
-- Export laporan (PDF/Excel)
-- Email notification
-- Grafik statistik absensi
-- Reminder otomatis untuk dosen yang belum absen
-
----
-
-**Dibuat oleh**: [Nama Kelompok]  
-**Mata Kuliah**: [Nama Mata Kuliah]  
-**Dosen Pengampu**: [Nama Dosen]  
-**Tahun Ajaran**: 2025
-
----
-
-## 📞 Kontak Tim
-
-Jika ada pertanyaan atau kesulitan, hubungi:
-- **Ketua Kelompok**: [Nama] - [Email/WA]
-- **Anggota 2**: [Nama] - [Email/WA]
-- **Anggota 3**: [Nama] - [Email/WA]
-
-**Semangat mengerjakan! 💪🚀**
