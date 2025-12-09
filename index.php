@@ -15,9 +15,9 @@ if (isset($_POST['login'])) {
             $_SESSION['role'] = $data['role'];
             $_SESSION['nama'] = $data['nama_lengkap'];
 
-            if ($data['role'] == 'admin') header("Location: dashboard_admin.php");
-            else if ($data['role'] == 'dosen') header("Location: dashboard_dosen.php");
-            else if ($data['role'] == 'mahasiswa') header("Location: dashboard_mahasiswa.php");
+            if ($data['role'] == 'admin') header("Location: admin/dashboard.php");
+            else if ($data['role'] == 'dosen') header("Location: dosen/dashboard.php");
+            else if ($data['role'] == 'mahasiswa') header("Location: mahasiswa/dashboard.php");
             exit;
         } else {
             $error = "Password salah!";

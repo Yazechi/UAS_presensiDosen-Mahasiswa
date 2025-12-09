@@ -1,0 +1,23 @@
+/* Placeholder Bootstrap CSS
+   This is a minimal placeholder so the project can load a local file.
+   For full Bootstrap features, replace this file with the official
+   Bootstrap 5 `bootstrap.min.css` downloaded into this path.
+*/
+
+/* Basic reset and a few utility classes that our layout expects */
+html,body { height:100%; }
+body { margin:0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+.container-fluid { width:100%; padding-right:var(--bs-gutter-x, .75rem); padding-left:var(--bs-gutter-x, .75rem); margin-right:auto; margin-left:auto; }
+.navbar { display:flex; align-items:center; padding:.5rem 1rem; }
+.navbar-brand { color:#fff; text-decoration:none; }
+.navbar-dark .navbar-nav .nav-link { color: #ddd; text-decoration:none; padding:.5rem; }
+.bg-dark { background-color:#343a40; }
+.btn { display:inline-block; padding:.375rem .75rem; border-radius:.25rem; text-decoration:none; }
+.btn-primary { background:#0d6efd; color:#fff; }
+.btn-secondary { background:#6c757d; color:#fff; }
+.badge { display:inline-block; padding:.25em .4em; font-size:.75em; border-radius:.25rem; }
+.badge.bg-info { background:#0dcaf0; color:#000; }
+.badge.bg-success { background:#198754; color:#fff; }
+.table { width:100%; border-collapse:collapse; }
+.table th, .table td { padding:.75rem; border-bottom:1px solid #dee2e6; }
+.form-control { padding:.5rem .75rem; border:1px solid #ced4da; border-radius:.25rem; width:100%; }
