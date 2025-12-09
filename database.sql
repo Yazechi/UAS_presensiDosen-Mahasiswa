@@ -140,4 +140,3 @@ INSERT INTO absensi_dosen (dosen_id, tanggal, waktu_absen, status) VALUES
 -- 5. Total 7 tabel: users, forums, forum_mahasiswa, jadwal_absensi, attendance, absensi_dosen, hari_libur
 -- 6. Dosen wajib absen setiap hari (kecuali hari libur) tanpa perlu join forum
 -- 7. Admin dapat melihat laporan absensi dosen dan mahasiswa
-
