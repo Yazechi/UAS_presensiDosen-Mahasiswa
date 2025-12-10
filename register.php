@@ -29,8 +29,10 @@ if (isset($_POST['register'])) {
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun - Sistem Presensi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
 <body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
@@ -67,8 +69,12 @@ if (isset($_POST['register'])) {
         </form>
 
         <div class="text-center mt-3">
-            <small>Sudah punya akun? <a href="index.php">Login disini</a></small>
+            <small>Sudah punya akun? <a href="login.php">Login disini</a></small>
+        </div>
+        <div class="text-center mt-2">
+            <small><a href="index.php">← Kembali ke Beranda</a></small>
         </div>
     </div>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 

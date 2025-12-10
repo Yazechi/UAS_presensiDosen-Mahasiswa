@@ -75,21 +75,5 @@ include __DIR__ . '/../includes/header.php';
     </div>
   </div>
 </div>
-          <a href="laporan_dosen.php" class="menu-btn">Buka Laporan</a>
-        </div>
-        <div class="menu-card">
-          <h6>Laporan Absensi Mahasiswa</h6>
-          <p style="color: #6c757d; font-size: 13px; margin-bottom: 15px;">Lihat rekap kehadiran mahasiswa per forum dan tanggal</p>
-          <a href="laporan_mahasiswa.php" class="menu-btn">Buka Laporan</a>
-        </div>
-        <div class="menu-card">
-          <h6>Data Absensi Detail</h6>
-          <p style="color: #6c757d; font-size: 13px; margin-bottom: 15px;">Lihat detail absensi per jadwal dan mahasiswa</p>
-          <a href="data_absensi.php" class="menu-btn">Lihat Data</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
