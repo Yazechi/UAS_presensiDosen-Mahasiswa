@@ -1,5 +1,9 @@
 <?php
-include '../config.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+cekLogin();
+cekRole('dosen');
 
 // 1. Cek Login Dosen
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'dosen') {
@@ -30,29 +34,23 @@ if (isset($_POST['buat_jadwal'])) {
     }
 }
 
-// 3. AMBIL DATA JADWAL (JOIN dengan tabel forum agar nama kelas muncul)
+// 3. AMBIL DATA JADWAL (JOIN dengan tabel forums agar nama kelas muncul)
 $query_jadwal = "SELECT j.*, f.nama_forum 
                  FROM jadwal_absensi j
-                 JOIN forum f ON j.forum_id = f.id
+                 JOIN forums f ON j.forum_id = f.id
                  WHERE j.created_by = '$dosen_id'
                  ORDER BY j.tanggal DESC, j.waktu_mulai DESC";
 $result_jadwal = mysqli_query($conn, $query_jadwal);
 
 // 4. AMBIL LIST FORUM (Untuk Pilihan di Form)
-$query_forum = "SELECT * FROM forum WHERE dosen_id = '$dosen_id'";
+$query_forum = "SELECT * FROM forums WHERE dosen_id = '$dosen_id'";
 $result_forum = mysqli_query($conn, $query_forum);
+
+include __DIR__ . '/../includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Kelola Jadwal Absensi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-
-<div class="container mt-5">
+<main class="app-main">
+<div class="container-fluid">
     <div class="row">
         
         <div class="col-md-4">
@@ -153,6 +151,6 @@ $result_forum = mysqli_query($conn, $query_forum);
 
     </div>
 </div>
+</main>
 
-</body>
-</html>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

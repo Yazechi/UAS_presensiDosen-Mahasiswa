@@ -15,8 +15,8 @@ $jadwal_aktif = $conn->query("SELECT COUNT(*) as total FROM jadwal_absensi WHERE
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="dashboard-wrapper">
-  <div class="container">
+<main class="app-main">
+  <div class="container-fluid">
     <div class="dashboard-header">
       <h1>Dashboard Mahasiswa</h1>
       <p>Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong></p>
@@ -58,6 +58,6 @@ include __DIR__ . '/../includes/header.php';
       </div>
     </div>
   </div>
-</div>
+</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

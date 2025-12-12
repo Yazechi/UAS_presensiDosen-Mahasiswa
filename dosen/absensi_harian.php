@@ -1,17 +1,13 @@
 <?php
-include '../config.php'; 
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-
-// Cek apakah user adalah dosen
-if ($_SESSION['role'] != 'dosen') {
-    header("Location: ../login.php");
-    exit;
-}
+cekLogin();
+cekRole('dosen');
 
 $dosen_id = $_SESSION['user_id'];
 $hari_ini = date('Y-m-d');
 
-// --- LOGIKA VALIDASI ---
 $info_libur = cekHariLibur($conn, $hari_ini);
 $data_absen = getStatusAbsensiDosenHariIni($conn, $dosen_id);
 
@@ -47,12 +43,11 @@ if (isset($_POST['absen_masuk']) && $bisa_absen) {
     }
 }
 
-// UI Header (Sesuaikan dengan template Anda)
-include '../template/header.php'; 
-include 'navbar_dosen.php'; 
+include __DIR__ . '/../includes/header.php'; 
 ?>
 
-<div class="container mt-5">
+<main class="app-main">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
@@ -85,6 +80,7 @@ include 'navbar_dosen.php';
         </div>
     </div>
 </div>
+</main>
 
 <script>
     // Script jam digital sederhana
@@ -94,4 +90,4 @@ include 'navbar_dosen.php';
     }, 1000);
 </script>
 
-<?php include '../template/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

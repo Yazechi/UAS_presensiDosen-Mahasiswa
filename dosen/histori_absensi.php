@@ -1,20 +1,19 @@
 <?php
-include '../config.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-if ($_SESSION['role'] != 'dosen') {
-    header("Location: ../login.php");
-    exit;
-}
+cekLogin();
+cekRole('dosen');
 
 $dosen_id = $_SESSION['user_id'];
 $query = "SELECT * FROM absensi_dosen WHERE dosen_id = '$dosen_id' ORDER BY tanggal DESC";
 $result = mysqli_query($conn, $query);
 
-include '../template/header.php';
-include 'navbar_dosen.php';
+include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="container mt-5">
+<main class="app-main">
+<div class="container-fluid">
     <h3>Riwayat Kehadiran Saya</h3>
     <div class="card shadow mt-3">
         <div class="card-body">
@@ -45,5 +44,6 @@ include 'navbar_dosen.php';
         </div>
     </div>
 </div>
+</main>
 
-<?php include '../template/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

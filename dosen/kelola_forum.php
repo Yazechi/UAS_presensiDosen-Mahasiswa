@@ -1,5 +1,9 @@
 <?php
-include '../config.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+cekLogin();
+cekRole('dosen');
 
 // 1. Cek Login Dosen
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'dosen') {
@@ -15,8 +19,8 @@ if (isset($_POST['tambah_forum'])) {
     // Generate Kode Forum unik (6 karakter)
     $kode_forum = strtoupper(substr(md5(time()), 0, 6));
 
-    // Query Insert ke tabel 'forum'
-    $query = "INSERT INTO forum (nama_forum, deskripsi, dosen_id, kode_forum) 
+    // Query Insert ke tabel 'forums'
+    $query = "INSERT INTO forums (nama_forum, deskripsi, dosen_id, kode_forum) 
               VALUES ('$nama_forum', '$deskripsi', '$dosen_id', '$kode_forum')";
     
     if (mysqli_query($conn, $query)) {
@@ -30,26 +34,19 @@ if (isset($_POST['tambah_forum'])) {
 if (isset($_GET['hapus'])) {
     $id_forum = $_GET['hapus'];
     // Hapus hanya jika forum itu milik dosen yang sedang login
-    mysqli_query($conn, "DELETE FROM forum WHERE id='$id_forum' AND dosen_id='$dosen_id'");
+    mysqli_query($conn, "DELETE FROM forums WHERE id='$id_forum' AND dosen_id='$dosen_id'");
     echo "<script>alert('Forum berhasil dihapus!'); window.location.href='kelola_forum.php';</script>";
 }
 
 // 4. AMBIL DATA FORUM MILIK DOSEN INI
-$query = "SELECT * FROM forum WHERE dosen_id = '$dosen_id' ORDER BY id DESC";
+$query = "SELECT * FROM forums WHERE dosen_id = '$dosen_id' ORDER BY id DESC";
 $result = mysqli_query($conn, $query);
+
+include __DIR__ . '/../includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Kelola Forum / Kelas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-</head>
-<body class="bg-light">
-
-<div class="container mt-5">
+<main class="app-main">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card shadow">
@@ -138,6 +135,6 @@ $result = mysqli_query($conn, $query);
         </div>
     </div>
 </div>
+</main>
 
-</body>
-</html>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

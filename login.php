@@ -37,15 +37,48 @@ if (isset($_POST['login'])) {
     <title>Login - Sistem Presensi</title>
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
 </head>
 
-<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="card shadow p-4" style="width: 400px;">
-        <div class="text-center mb-4">
-            <img src="https://via.placeholder.com/100/667eea/ffffff?text=Login" class="rounded-circle mb-3" alt="Logo">
-            <h3>Login Sistem</h3>
-            <p class="text-muted">Masuk ke akun Anda</p>
+<body>
+    <div class="login-card" style="width: 450px; overflow: hidden;">
+        <div class="login-header">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
+            <h3 class="mb-2">Login Sistem</h3>
+            <p class="mb-0" style="opacity: 0.9;">Sistem Presensi Dosen & Mahasiswa</p>
         </div>
+        <div class="p-4">
         <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
         <form method="POST">
             <div class="mb-3">
@@ -56,14 +89,13 @@ if (isset($_POST['login'])) {
                 <label class="form-label">Password</label>
                 <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
             </div>
-            <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
+            <button type="submit" name="login" class="btn btn-login btn-primary w-100">Login Sekarang</button>
         </form>
 
-        <div class="text-center mt-3">
-            <small>Belum punya akun? <a href="register.php">Daftar disini</a></small>
+        <div class="text-center mt-4">
+            <p class="mb-2">Belum punya akun? <a href="register.php" class="text-decoration-none fw-bold">Daftar disini</a></p>
+            <a href="index.php" class="text-muted text-decoration-none"><small>← Kembali ke Beranda</small></a>
         </div>
-        <div class="text-center mt-2">
-            <small><a href="index.php">← Kembali ke Beranda</a></small>
         </div>
     </div>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

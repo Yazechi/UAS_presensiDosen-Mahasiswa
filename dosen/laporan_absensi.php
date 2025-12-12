@@ -1,17 +1,16 @@
 <?php
-include '../config.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// 1. Cek Apakah User adalah Dosen
+cekLogin();
+cekRole('dosen');
+
  
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'dosen') {
-    // Jika testing tanpa login, kita bisa matikan redirect ini sementara
-    // header("Location: ../index.php");
-    // exit;
 }
 
-$dosen_id = $_SESSION['user_id'] ?? 0; // Ambil ID dosen dari session
+$dosen_id = $_SESSION['user_id'] ?? 0; 
 
-// 2. Ambil Data Laporan dari Database
 $query = "SELECT 
             absensi.id,
             absensi.waktu_absen,
@@ -27,19 +26,12 @@ $query = "SELECT
           WHERE jadwal_absensi.created_by = '$dosen_id' 
           ORDER BY jadwal_absensi.tanggal DESC, users.nama_lengkap ASC";
 $result = mysqli_query($conn, $query);
+
+include __DIR__ . '/../includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Laporan Absensi Mahasiswa</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-</head>
-<body class="bg-light">
-
-<div class="container mt-5">
+<main class="app-main">
+<div class="container-fluid">
     <div class="card shadow">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-file-earmark-spreadsheet"></i> Laporan Absensi Mahasiswa</h5>
@@ -125,6 +117,6 @@ $result = mysqli_query($conn, $query);
         </div>
     </div>
 </div>
+</main>
 
-</body>
-</html>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
