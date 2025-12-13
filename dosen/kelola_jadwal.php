@@ -35,12 +35,16 @@ if (isset($_POST['buat_jadwal'])) {
 }
 
 // 3. AMBIL DATA JADWAL (JOIN dengan tabel forums agar nama kelas muncul)
-$query_jadwal = "SELECT j.*, f.nama_forum 
+$query_jadwal = "SELECT j.*, f.judul AS nama_forum
                  FROM jadwal_absensi j
                  JOIN forums f ON j.forum_id = f.id
                  WHERE j.created_by = '$dosen_id'
                  ORDER BY j.tanggal DESC, j.waktu_mulai DESC";
 $result_jadwal = mysqli_query($conn, $query_jadwal);
+
+if (!$result_jadwal) {
+    die("Query error: " . mysqli_error($conn));
+}
 
 // 4. AMBIL LIST FORUM (Untuk Pilihan di Form)
 $query_forum = "SELECT * FROM forums WHERE dosen_id = '$dosen_id'";
@@ -49,9 +53,7 @@ $result_forum = mysqli_query($conn, $query_forum);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <div class="row">
+<div class="row">
         
         <div class="col-md-4">
             <div class="card shadow mb-4">
@@ -66,7 +68,7 @@ include __DIR__ . '/../includes/header.php';
                             <select name="forum_id" class="form-select" required>
                                 <option value="">-- Pilih Kelas --</option>
                                 <?php while($f = mysqli_fetch_assoc($result_forum)): ?>
-                                    <option value="<?= $f['id']; ?>"><?= $f['nama_forum']; ?></option>
+                                    <option value="<?= $f['id']; ?>"><?= htmlspecialchars($f['judul']); ?></option>
                                 <?php endwhile; ?>
                             </select>
                             <div class="form-text">Pastikan sudah membuat Forum dulu.</div>
@@ -150,7 +152,5 @@ include __DIR__ . '/../includes/header.php';
         </div>
 
     </div>
-</div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

@@ -12,9 +12,7 @@ $result = mysqli_query($conn, $query);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <h3>Riwayat Kehadiran Saya</h3>
+<h3>Riwayat Kehadiran Saya</h3>
     <div class="card shadow mt-3">
         <div class="card-body">
             <table class="table table-striped">
@@ -43,7 +41,5 @@ include __DIR__ . '/../includes/header.php';
             </table>
         </div>
     </div>
-</div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

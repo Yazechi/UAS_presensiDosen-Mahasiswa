@@ -1,5 +1,4 @@
-CREATE DATABASE IF NOT EXISTS db_presensi_uas;
-USE db_presensi_uas;
+USE if0_40673999_db_presensi_uas;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

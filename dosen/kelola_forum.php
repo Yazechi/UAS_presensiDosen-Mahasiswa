@@ -13,16 +13,16 @@ $dosen_id = $_SESSION['user_id'] ?? 1; // Default ID 1 jika testing tanpa login
 
 // 2. PROSES TAMBAH FORUM
 if (isset($_POST['tambah_forum'])) {
-    $nama_forum = mysqli_real_escape_string($conn, $_POST['nama_forum']);
+    $judul = mysqli_real_escape_string($conn, $_POST['nama_forum']);
     $deskripsi  = mysqli_real_escape_string($conn, $_POST['deskripsi']);
-    
+
     // Generate Kode Forum unik (6 karakter)
     $kode_forum = strtoupper(substr(md5(time()), 0, 6));
 
-    // Query Insert ke tabel 'forums'
-    $query = "INSERT INTO forums (nama_forum, deskripsi, dosen_id, kode_forum) 
-              VALUES ('$nama_forum', '$deskripsi', '$dosen_id', '$kode_forum')";
-    
+    // Query Insert ke tabel 'forums' (kolom nama di DB adalah 'judul')
+    $query = "INSERT INTO forums (judul, deskripsi, dosen_id, kode_forum) 
+              VALUES ('$judul', '$deskripsi', '$dosen_id', '$kode_forum')";
+
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Berhasil membuat forum baru! Kode Akses: $kode_forum'); window.location.href='kelola_forum.php';</script>";
     } else {
@@ -39,15 +39,13 @@ if (isset($_GET['hapus'])) {
 }
 
 // 4. AMBIL DATA FORUM MILIK DOSEN INI
-$query = "SELECT * FROM forums WHERE dosen_id = '$dosen_id' ORDER BY id DESC";
+$query = "SELECT id, judul AS nama_forum, deskripsi, kode_forum FROM forums WHERE dosen_id = '$dosen_id' ORDER BY id DESC";
 $result = mysqli_query($conn, $query);
 
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <div class="row">
+<div class="row">
         <div class="col-md-4 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
@@ -134,7 +132,5 @@ include __DIR__ . '/../includes/header.php';
             </div>
         </div>
     </div>
-</div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

@@ -19,14 +19,12 @@ $persentase_kehadiran = hitungPersentaseKehadiranDosen($conn, $dosen_id);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-  <div class="container-fluid">
-    <div class="dashboard-header">
-      <h1>Dashboard Dosen</h1>
-      <p>Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong></p>
-    </div>
+<div class="dashboard-header">
+  <h1>Dashboard Dosen</h1>
+  <p>Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong></p>
+</div>
 
-    <?php if (!$status_absen['sudah_absen'] && !$status_absen['is_libur']): ?>
+<?php if (!$status_absen['sudah_absen'] && !$status_absen['is_libur']): ?>
     <div class="alert alert-warning">
       <strong>Perhatian!</strong> Anda belum melakukan absensi hari ini. <a href="absensi_harian.php" class="alert-link">Absen sekarang</a>
     </div>
@@ -94,7 +92,5 @@ include __DIR__ . '/../includes/header.php';
         </div>
       </div>
     </div>
-  </div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

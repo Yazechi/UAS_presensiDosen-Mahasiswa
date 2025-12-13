@@ -18,9 +18,7 @@ $result = mysqli_query($conn, $query);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <div class="card shadow">
+<div class="card shadow">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Daftar Mahasiswa</h5>
             <a href="dashboard.php" class="btn btn-light btn-sm">Kembali ke Dashboard</a>
@@ -62,7 +60,5 @@ include __DIR__ . '/../includes/header.php';
 
         </div>
     </div>
-</div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

@@ -30,9 +30,7 @@ $result = mysqli_query($conn, $query);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <div class="card shadow">
+<div class="card shadow">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-file-earmark-spreadsheet"></i> Laporan Absensi Mahasiswa</h5>
             <div>
@@ -116,7 +114,5 @@ include __DIR__ . '/../includes/header.php';
 
         </div>
     </div>
-</div>
-</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

@@ -33,6 +33,19 @@ include __DIR__ . '/../includes/header.php';
 <div class="page-wrapper">
     <div class="container">
 
+        <?php if (isset($_GET['success'])): ?>
+            <div class="alert alert-success mt-3">Berhasil bergabung ke forum.</div>
+        <?php elseif (isset($_GET['error'])): ?>
+            <?php $err = $_GET['error']; ?>
+            <div class="alert alert-danger mt-3">
+                <?php if ($err === 'invalid'): ?>Forum tidak valid.
+                <?php elseif ($err === 'notfound'): ?>Forum tidak ditemukan.
+                <?php elseif ($err === 'already'): ?>Anda sudah tergabung di forum ini.
+                <?php else: ?>Terjadi kesalahan. Coba lagi nanti.
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="page-header">
             <h3>🔔 Join Forum Pembelajaran</h3>
             <a href="forum.php" class="btn btn-secondary">← Kembali</a>

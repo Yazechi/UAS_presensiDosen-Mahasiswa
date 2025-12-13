@@ -71,20 +71,33 @@
 
 				<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'dosen'): ?>
 				<li class="nav-item">
-					<a href="forum.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'forum.php') ? 'active' : '' ?>">
-						💬 Forum Saya
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="absensi_harian.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'absensi_harian.php') ? 'active' : '' ?>">
-						✅ Absensi Harian
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="histori_absensi.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'histori_absensi.php') ? 'active' : '' ?>">
-						📊 Histori Absensi
-					</a>
-				</li>
+				<a href="kelola_forum.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'kelola_forum.php') ? 'active' : '' ?>">
+					💬 Kelola Forum
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="kelola_jadwal.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'kelola_jadwal.php') ? 'active' : '' ?>">
+					📅 Kelola Jadwal
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="kelola_mahasiswa.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'kelola_mahasiswa.php') ? 'active' : '' ?>">
+					👥 Kelola Mahasiswa
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="absensi_harian.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'absensi_harian.php') ? 'active' : '' ?>">
+					✅ Absensi Harian
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="histori_absensi.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'histori_absensi.php') ? 'active' : '' ?>">
+					📊 Histori Absensi
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="laporan_absensi.php" class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'laporan_absensi.php') ? 'active' : '' ?>">
+					📋 Laporan Absensi
 				<?php endif; ?>
 
 				<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'mahasiswa'): ?>
@@ -117,3 +130,4 @@
 		</div>
 	</aside>
 
+	<main class="app-main">

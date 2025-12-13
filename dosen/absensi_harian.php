@@ -46,9 +46,7 @@ if (isset($_POST['absen_masuk']) && $bisa_absen) {
 include __DIR__ . '/../includes/header.php'; 
 ?>
 
-<main class="app-main">
-<div class="container-fluid">
-    <div class="row justify-content-center">
+<div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white text-center">
@@ -79,8 +77,6 @@ include __DIR__ . '/../includes/header.php';
             </div>
         </div>
     </div>
-</div>
-</main>
 
 <script>
     // Script jam digital sederhana

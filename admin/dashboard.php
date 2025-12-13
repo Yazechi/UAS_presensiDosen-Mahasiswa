@@ -17,14 +17,12 @@ $absensi_hari_ini = $conn->query("SELECT COUNT(*) as total FROM absensi_dosen WH
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="dashboard-wrapper">
-  <div class="container">
-    <div class="dashboard-header">
-      <h1>Dashboard Admin</h1>
-      <p>Selamat datang, <strong><?= htmlspecialchars($_SESSION['nama'] ?? 'Admin') ?></strong> | Kelola sistem presensi dengan mudah</p>
-    </div>
+<div class="dashboard-header">
+  <h1>Dashboard Admin</h1>
+  <p>Selamat datang, <strong><?= htmlspecialchars($_SESSION['nama'] ?? 'Admin') ?></strong> | Kelola sistem presensi dengan mudah</p>
+</div>
 
-    <!-- Statistik Cards -->
+<!-- Statistik Cards -->
     <div class="stats-row">
       <div class="stat-card">
         <h6>Total Dosen</h6>
@@ -73,6 +71,6 @@ include __DIR__ . '/../includes/header.php';
         </div>
       </div>
     </div>
-  </div>
-</div>
 
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

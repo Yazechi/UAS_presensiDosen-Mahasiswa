@@ -32,6 +32,7 @@
             position: relative;
             z-index: 1;
         }
+        /* Carousel styles moved to assets/css/style.css */
         .hero-content h1 {
             font-size: 52px;
             font-weight: 800;
@@ -85,20 +86,53 @@
             .hero-content p {
                 font-size: 16px;
             }
+            .hero-illustration { display: none; }
         }
     </style>
 </head>
 
 <body>
-    <!-- Hero Section -->
+    <!-- Hero Section (Bootstrap Carousel) -->
     <section class="landing-hero">
-        <div class="hero-content">
-            <h1>Sistem Presensi Dosen & Mahasiswa</h1>
-            <p>Kelola absensi dosen dan mahasiswa dengan mudah, cepat, dan efisien. Sistem terintegrasi untuk monitoring kehadiran secara real-time.</p>
-            <div class="hero-buttons">
-                <a href="login.php" class="hero-btn primary">Login Sekarang</a>
-                <a href="register.php" class="hero-btn secondary">Daftar Akun</a>
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
             </div>
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/SistemPresensi/assets/img/hero-image.png" class="d-block w-100" alt="Ilustrasi Sistem Presensi 1">
+                    <div class="carousel-caption">
+                        <h1>Sistem Presensi Dosen & Mahasiswa</h1>
+                        <p>Kelola absensi dosen dan mahasiswa dengan mudah, cepat, dan efisien. Sistem terintegrasi untuk monitoring kehadiran secara real-time.</p>
+                        <div class="hero-buttons">
+                            <a href="login.php" class="hero-btn primary">Login Sekarang</a>
+                            <a href="register.php" class="hero-btn secondary">Daftar Akun</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/SistemPresensi/assets/img/hero-image2.jpg" class="d-block w-100" alt="Ilustrasi Sistem Presensi 2">
+                    <div class="carousel-caption">
+                        <h1>Sistem Presensi Terintegrasi</h1>
+                        <p>Kelola jadwal, forum, dan laporan kehadiran secara realtime dari satu dashboard.</p>
+                        <div class="hero-buttons">
+                            <a href="login.php" class="hero-btn primary">Login Sekarang</a>
+                            <a href="register.php" class="hero-btn secondary">Daftar Akun</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </section>
 
@@ -112,17 +146,17 @@
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 30px;">
                 <div class="card" style="border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 12px; padding: 30px; text-align: center; transition: all 0.3s ease;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">👨‍💼</div>
+                    <img src="/SistemPresensi/assets/img/admin.svg" alt="Admin" class="feature-icon">
                     <h5 style="font-size: 20px; font-weight: 700; color: #2d3748; margin-bottom: 15px;">Dashboard Admin</h5>
                     <p style="color: #718096; line-height: 1.6;">Kelola jadwal, forum, hari libur, dan monitoring absensi dosen & mahasiswa</p>
                 </div>
                 <div class="card" style="border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 12px; padding: 30px; text-align: center; transition: all 0.3s ease;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">👨‍🏫</div>
+                    <img src="/SistemPresensi/assets/img/lecturer.svg" alt="Dosen" class="feature-icon">
                     <h5 style="font-size: 20px; font-weight: 700; color: #2d3748; margin-bottom: 15px;">Absensi Dosen</h5>
                     <p style="color: #718096; line-height: 1.6;">Dosen wajib absen harian (Senin-Jumat), kelola forum & mahasiswa dengan mudah</p>
                 </div>
                 <div class="card" style="border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 12px; padding: 30px; text-align: center; transition: all 0.3s ease;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">👨‍🎓</div>
+                    <img src="/SistemPresensi/assets/img/student.svg" alt="Mahasiswa" class="feature-icon">
                     <h5 style="font-size: 20px; font-weight: 700; color: #2d3748; margin-bottom: 15px;">Absensi Mahasiswa</h5>
                     <p style="color: #718096; line-height: 1.6;">Mahasiswa dapat absen sesuai jadwal dan melihat histori kehadiran</p>
                 </div>
